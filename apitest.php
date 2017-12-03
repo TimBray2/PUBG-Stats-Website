@@ -2,9 +2,9 @@
 //header('Content-type: Application/JSON');
 //Retrieve data from PUBG stats
 //setup the request, you can also use CURLOPT_URL
-$user = 'JustChillz';
+$user = 'VissGames';
 function getPlayerStats() {
-  $queryString = "?region=oc"; //Need to figure out how to adjust results with more paramaters for performance
+  $queryString = "?region=na&season=2017-pre4"; //Need to figure out how to adjust results with more paramaters for performance
   $ch = curl_init('https://api.pubgtracker.com/v2/profile/pc/' . $GLOBALS['user'] . '/' . $queryString);
   // Returns the data/output as a string instead of raw data
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -44,23 +44,28 @@ function displayData($result) {
   echo 'User: ' . $GLOBALS['user'];
   for ($k = 0; $k < count($result['stats']); $k++) {
     //sort depending on what they want
+    //getRegion(); getMode(); getSeason();
+    //filter by these
+
     $section = $result['stats'][$k]['stats'];
     //print_r($result['stats'][$k]);
     echo "<br>------------------------------------------------------------------";
-    echo "<h2>" . 'Region: ' . $result['stats'][$k]['region']
+    echo "<h2>" . 'Region: ' . strtoupper($result['stats'][$k]['region'])
       . " \nMode: " . $result['stats'][$k]['mode']
       . " \nSeason: " . $result['stats'][$k]['season'] . " </h2>";
     for ($i = 0; $i < count($section); $i++) {
-      echo $section[$i]['field'] . ": " . $section[$i]['displayValue'] . "<br>";
+      echo "<p class='dataRow'>" . $section[$i]['field'] . ": " . $section[$i]['displayValue'] . "</p>";
     }
   }
 }
 ?>
 <html>
 <head>
+  <link rel="stylesheet" href="css/stylesheet.css">
 </head>
 <body>
   <div id="dataPicker">
+    <h2>Selection Area</h2>
     <p>region / season / mode</p>
     <!-- selection tools  -->
   </div>
