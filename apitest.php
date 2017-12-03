@@ -1,6 +1,7 @@
 <?php
+//header('Content-type: Application/JSON');
+/* PRACTICE WITH FAKE DATA
 //echo file_get_html('https://randomuser.me/api/?results=5');
-/*
 $file = "https://randomuser.me/api/?results=2";
 $data = file_get_contents($file);
 //$data = mb_substr($data, strpos($data, '{'));
@@ -14,8 +15,7 @@ $count = 0;
 foreach ($people as $person) {
   echo "Person " . ($count + 1) . ": " . $people[$count]['gender'] . "<br>";
   $count++;
-}
-*/
+} */
 
 //Retrieve data from PUBG stats
 //setup the request, you can also use CURLOPT_URL
@@ -42,12 +42,11 @@ curl_close($ch);
 - [0 - x] is different stats e.g. 0 = KDR, 1 = winRatio
 */
 
-$result = json_decode($data, true);
-print_r($result);
+/*$result = json_decode($data, JSON_PRETTY_PRINT);
+//print_r($result); use if data is decoded ^^^ */
+echo "<pre>" . $data . "</pre>";
 $section = $result['stats'][0]['stats'];
 for ($i = 0; $i < count($section); $i++) {
   echo $section[$i]['field'] . ": " . $section[$i]['displayValue'] . "<br>";
 }
-//print_r($result);
-
 ?>
