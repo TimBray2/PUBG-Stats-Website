@@ -1,0 +1,42 @@
+html {
+  font-family: 'Lato', sans-serif;
+}
+
+.dataRow{
+  margin: 2em;
+}
+
+#wrapper{
+  width: 100%;
+}
+
+#content{
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#resultsContent{
+  padding-top: 1em;
+}
+
+.rowTitle{
+  margin-bottom: 1em;
+  font-size: 1.2em;
+  
+}
+
+.dataRow{
+  background-color: #424242;
+  border: 1px #424242 solid;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  padding: 2em;
+}
