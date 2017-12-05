@@ -11,7 +11,7 @@ function getPlayerStats() {
 //  $_SESSION['season'] = 'season=2017-pre5';
   $_SESSION['region'] = 'oc';
   //$ch = curl_init('https://api.pubgtracker.com/v2/profile/pc/' . $GLOBALS['user'] . '/' . $queryString);
-  $ch = curl_init('http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=8658ACC40D6D808454C608996A43F787&steamid=76561197979947606');
+  $ch = curl_init('https://ow-api.com/v1/stats/pc/us/JustChillz-1620/heroes/genji');
   // Returns the data/output as a string instead of raw data
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   //Set your auth headers
