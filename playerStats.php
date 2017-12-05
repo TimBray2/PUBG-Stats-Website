@@ -19,8 +19,8 @@ $section = $result['stats'][0]['stats'];
 $region = 'oc';
 $season = '2017-pre5';
 $result = json_decode($_SESSION['playerStats'], JSON_PRETTY_PRINT);
-print_r($_SESSION['playerStats']);
-echo "<pre>" . $_SESSION['playerStats'] . "</pre>";
+$prettyData = pretty_json($_SESSION['playerStats']);
+echo "<pre>" . $prettyData . "</pre>";
 //sortStats($result);
 //get the search filters
 ?>

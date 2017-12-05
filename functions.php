@@ -11,14 +11,14 @@ function getPlayerStats() {
 //  $_SESSION['season'] = 'season=2017-pre5';
   $_SESSION['region'] = 'oc';
   //$ch = curl_init('https://api.pubgtracker.com/v2/profile/pc/' . $GLOBALS['user'] . '/' . $queryString);
-  $ch = curl_init('https://ow-api.com/v1/stats/pc/us/JustChillz-1620/heroes/genji');
+  $ch = curl_init('https://ow-api.com/v1/stats/pc/us/JustChillz-1620/heroes/genji,dVa,mei,soldier76');
   // Returns the data/output as a string instead of raw data
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   //Set your auth headers
-  $apikey = '1898182c-6af2-4365-b957-382ad3f62e45';
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-      'TRN-Api-Key: ' . $apikey
-      ));
+//  $apikey = '1898182c-6af2-4365-b957-382ad3f62e45';
+  //curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+  //    'TRN-Api-Key: ' . $apikey
+  //    ));
   // get stringified data/output. See CURLOPT_RETURNTRANSFER
   $data = curl_exec($ch);
   $info = curl_getinfo($ch);
@@ -84,4 +84,55 @@ function displayData($result) {
       . $stats[15]['label'] . ": " . $stats[15]['displayValue'] . " - "
       . $stats[0]['label'] . ": " . $stats[0]['displayValue'] . "</div></div>";
   }
+}
+
+function pretty_json($json) {
+
+    $result      = '';
+    $pos         = 0;
+    $strLen      = strlen($json);
+    $indentStr   = '  ';
+    $newLine     = "\n";
+    $prevChar    = '';
+    $outOfQuotes = true;
+
+    for ($i=0; $i<=$strLen; $i++) {
+
+        // Grab the next character in the string.
+        $char = substr($json, $i, 1);
+
+        // Are we inside a quoted string?
+        if ($char == '"' && $prevChar != '\\') {
+            $outOfQuotes = !$outOfQuotes;
+
+        // If this character is the end of an element,
+        // output a new line and indent the next line.
+        } else if(($char == '}' || $char == ']') && $outOfQuotes) {
+            $result .= $newLine;
+            $pos --;
+            for ($j=0; $j<$pos; $j++) {
+                $result .= $indentStr;
+            }
+        }
+
+        // Add the character to the result string.
+        $result .= $char;
+
+        // If the last character was the beginning of an element,
+        // output a new line and indent the next line.
+        if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
+            $result .= $newLine;
+            if ($char == '{' || $char == '[') {
+                $pos ++;
+            }
+
+            for ($j = 0; $j < $pos; $j++) {
+                $result .= $indentStr;
+            }
+        }
+
+        $prevChar = $char;
+    }
+
+    return $result;
 }
