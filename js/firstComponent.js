@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 //react component
 var createReactClass = require('create-react-class');
-var CommentBox = createReactClass({
+var PlayerStats = createReactClass({
   getInitialState: function() {
     return {videoId: ""}
   },
@@ -27,6 +27,6 @@ var CommentBox = createReactClass({
 });
 //<iframe width="560" height="315" src="https://www.youtube.com/embed/uIS3ejRCwME?start=30" frameborder="0" allowfullscreen></iframe>
 ReactDOM.render(
-  <CommentBox />,
+  <PlayerStats />,
   document.getElementById('playerStatsContent')
 );

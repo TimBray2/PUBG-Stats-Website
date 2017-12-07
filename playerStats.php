@@ -1,8 +1,8 @@
 <?php
 require('functions.php');
 session_start();
-$user = $_POST['userName'];
-//$user = 'JustChillz';
+//$user = $_POST['userName'];
+$user = 'JustChillz';
 $_SESSION['playerStats'] = getPlayerStats();
 /*
 -type e.g. 'stats'
@@ -49,7 +49,6 @@ $prettyData = pretty_json($_SESSION['playerStats']);
       </div>
       <div id="resultsContent">
         <div id="playerStatsContent"></div>
-        <div id="test"></div>
         <div id="data"><?php displayData($result); ?></div>
       </div>
     </div>
