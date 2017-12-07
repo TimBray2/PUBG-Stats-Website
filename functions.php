@@ -10,15 +10,15 @@ function getPlayerStats() {
   $queryString = "?region=oc"; //Need to figure out how to adjust results with more paramaters for performance
 //  $_SESSION['season'] = 'season=2017-pre5';
   $_SESSION['region'] = 'oc';
-  //$ch = curl_init('https://api.pubgtracker.com/v2/profile/pc/' . $GLOBALS['user'] . '/' . $queryString);
-  $ch = curl_init('https://ow-api.com/v1/stats/pc/us/JustChillz-1620/heroes/genji,dVa,mei,soldier76');
+  $ch = curl_init('https://api.pubgtracker.com/v2/profile/pc/' . $GLOBALS['user'] . '/' . $queryString);
+  //$ch = curl_init('https://api.bf4stats.com/api/playerInfo?plat=ps4&name=stumeista');
   // Returns the data/output as a string instead of raw data
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   //Set your auth headers
-//  $apikey = '1898182c-6af2-4365-b957-382ad3f62e45';
-  //curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-  //    'TRN-Api-Key: ' . $apikey
-  //    ));
+  $apikey = '1898182c-6af2-4365-b957-382ad3f62e45';
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      'TRN-Api-Key: ' . $apikey
+      ));
   // get stringified data/output. See CURLOPT_RETURNTRANSFER
   $data = curl_exec($ch);
   $info = curl_getinfo($ch);
