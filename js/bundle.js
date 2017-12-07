@@ -964,27 +964,26 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Stats;
-//react component
+//Retrieve JSON info from PHP
 var oReq = new XMLHttpRequest(); //New request object
 oReq.onload = function () {
-  //This is where you handle what to do with the response.
   //The actual data is found on this.responseText
-  setPlayerStats(this.responseText); //Will alert: 42
+  setPlayerStats(JSON.parse(this.responseText));
 };
-oReq.open("get", "data.php", false);
-//                               ^ Don't block the rest of the execution.
-//                                 Don't wait until the request finishes to
-//                                 continue.
+oReq.open("get", "data.php", false); //wait until the request finishes to continue
 oReq.send();
+
+//Set player stats
 function setPlayerStats(stats) {
   Stats = stats;
 }
+//react component - get player stats
 var createReactClass = __webpack_require__(28);
 var PlayerStats = createReactClass({
   displayName: 'PlayerStats',
 
   getInitialState: function getInitialState() {
-    return { playerStats: JSON.parse(Stats), count: 0 };
+    return { playerStats: Stats, count: 0 };
   },
   HandleClick: function HandleClick() {
     var newCount = this.state.count + 1;
@@ -992,36 +991,50 @@ var PlayerStats = createReactClass({
       newCount = 0;
     }
     this.setState({ count: newCount });
-    /*this.state.items = [];
-    for (var i = 0; i < this.state.playerStats['stats'][i].length; i++) {
-      this.state.items.push(
-        <div className="statRow" key={i}>{this.state.playerStats['stats'][i]['stats']}</div>
-      )
-    }*/
   },
   render: function render() {
     var dataRows = [];
     for (var i = 0; i < this.state.playerStats.stats.length; i++) {
+      var stats = this.state.playerStats.stats[i].stats;
       dataRows.push(_react2.default.createElement(
         'div',
         { className: 'dataRow', key: "datarow-" + i },
-        this.state.playerStats.stats[i].mode
+        _react2.default.createElement(
+          'div',
+          { className: 'rowTitle', key: "datarowtitle-" + i },
+          'Region: ',
+          this.state.playerStats.stats[i].region.toUpperCase(),
+          '  / Mode: ',
+          this.state.playerStats.stats[i].mode,
+          '  / Season: ',
+          this.state.playerStats.stats[i].season
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'rowData' },
+          stats[1].label,
+          ': ',
+          stats[1].displayValue,
+          ' -',
+          stats[11].label,
+          ': ',
+          stats[11].displayValue,
+          ' -',
+          stats[15].label,
+          ': ',
+          stats[15].displayValue,
+          ' -',
+          stats[0].label,
+          ': ',
+          stats[0].displayValue
+        )
       ));
     }
     return (
-      //inline css styling in JSX
+      //inline css styling in JSX double brackets style={{fontSize : "1em"}}
       _react2.default.createElement(
         'div',
-        { style: { fontSize: "1em" }, className: 'commentBox' },
-        'Enter a video: ',
-        _react2.default.createElement('input', { id: 'videoId' }),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'button',
-          { onClick: this.HandleClick },
-          'Update Stats'
-        ),
-        _react2.default.createElement('br', null),
+        { className: 'playerStatsCollection' },
         _react2.default.createElement(
           'div',
           null,
@@ -1031,7 +1044,7 @@ var PlayerStats = createReactClass({
     );
   }
 });
-//<iframe width="560" height="315" src="https://www.youtube.com/embed/uIS3ejRCwME?start=30" frameborder="0" allowfullscreen></iframe>
+
 _reactDom2.default.render(_react2.default.createElement(PlayerStats, null), document.getElementById('playerStatsContent'));
 
 /***/ }),
