@@ -20,6 +20,7 @@ $region = 'oc';
 $season = '2017-pre5';
 $result = json_decode($_SESSION['playerStats'], JSON_PRETTY_PRINT);
 $prettyData = pretty_json($_SESSION['playerStats']);
+$_SESSION['playerStats'] = $result;
 //echo "<pre>" . $prettyData . "</pre>";
 //sortStats($result);
 //get the search filters
@@ -48,6 +49,13 @@ $prettyData = pretty_json($_SESSION['playerStats']);
         <!-- selection tools  -->
       </div>
       <div id="resultsContent">
+        <script>
+          //function reqListener () {
+          //  console.log(this.responseText);
+          //}
+
+
+      </script>
         <div id="playerStatsContent"></div>
         <div id="data"><?php displayData($result); ?></div>
       </div>

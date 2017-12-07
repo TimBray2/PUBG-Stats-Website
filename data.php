@@ -1,4 +1,4 @@
 <?php
 session_start();
-echo $_SESSION['playerStats'];
+echo json_encode($_SESSION['playerStats']);
 ?>
