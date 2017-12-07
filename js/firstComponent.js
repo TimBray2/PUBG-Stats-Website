@@ -51,6 +51,7 @@ var PlayerStats = createReactClass({
     return (
       //inline css styling in JSX double brackets style={{fontSize : "1em"}}
       <div className="playerStatsCollection">
+        <button onClick={this.HandleClick}>Load Video</button>
         <div>{dataRows[this.state.count]}</div>
       </div>
     );

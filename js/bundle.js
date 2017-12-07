@@ -1036,6 +1036,11 @@ var PlayerStats = createReactClass({
         'div',
         { className: 'playerStatsCollection' },
         _react2.default.createElement(
+          'button',
+          { onClick: this.HandleClick },
+          'Load Video'
+        ),
+        _react2.default.createElement(
           'div',
           null,
           dataRows[this.state.count]
