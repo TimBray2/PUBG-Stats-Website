@@ -20,7 +20,7 @@ $region = 'oc';
 $season = '2017-pre5';
 $result = json_decode($_SESSION['playerStats'], JSON_PRETTY_PRINT);
 $prettyData = pretty_json($_SESSION['playerStats']);
-echo "<pre>" . $prettyData . "</pre>";
+//echo "<pre>" . $prettyData . "</pre>";
 //sortStats($result);
 //get the search filters
 ?>
@@ -30,7 +30,6 @@ echo "<pre>" . $prettyData . "</pre>";
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
-  <script src="js/getData.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 </head>
 <body onload="loadStats()">
@@ -49,10 +48,13 @@ echo "<pre>" . $prettyData . "</pre>";
         <!-- selection tools  -->
       </div>
       <div id="resultsContent">
+        <div id="playerStatsContent"></div>
         <div id="test"></div>
         <div id="data"><?php displayData($result); ?></div>
       </div>
     </div>
   </div>
+  <script src="js/bundle.js"></script>
+  <script src="js/getData.js"></script>
 </body>
 </html>
