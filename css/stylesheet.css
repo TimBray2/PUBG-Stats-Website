@@ -2,8 +2,16 @@ html {
   font-family: 'Lato', sans-serif;
 }
 
+body{
+  color: white;
+  background-image:url("../img/pubg_background_min.png");
+  background-position:center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
 .dataRow{
-  margin: 2em;
+  margin: 2em 0 2em 0;
 }
 
 #wrapper{
@@ -26,7 +34,7 @@ html {
 .rowTitle{
   margin-bottom: 1em;
   font-size: 1.2em;
-  
+
 }
 
 .dataRow{

@@ -9,11 +9,6 @@ $_SESSION['playerStats'] = getPlayerStats();
 - [0-x] season
 - ['stats']
 - [0 - x] is different stats e.g. 0 = KDR, 1 = winRatio
-
-$result = json_decode($data, JSON_PRETTY_PRINT);
-//print_r($result); //use if data is decoded ^^^
-//echo "<pre>" . $data . "</pre>";
-$section = $result['stats'][0]['stats'];
 */
 //Sort using these from user input if not possible to use
 $region = 'oc';
@@ -27,6 +22,9 @@ $_SESSION['playerStats'] = $result;
 ?>
 <html>
 <head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+  rel="stylesheet" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+  crossorigin="anonymous">
   <link href="css/stylesheet.css" rel="stylesheet" type="text/css">
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -43,21 +41,8 @@ $_SESSION['playerStats'] = $result;
           <input type="submit">
           </form>
         </div>
-      <div id="dataPicker">
-        <h2>Selection Area</h2>
-        <p>region / season / mode</p>
-        <!-- selection tools  -->
-      </div>
       <div id="resultsContent">
-        <script>
-          //function reqListener () {
-          //  console.log(this.responseText);
-          //}
-
-
-      </script>
         <div id="playerStatsContent"></div>
-        <div id="data"><?php //displayData($result); ?></div>
       </div>
     </div>
   </div>

@@ -1019,7 +1019,7 @@ var PlayerStats = createReactClass({
             '  / Mode: ',
             this.state.playerStats.stats[i].mode,
             '  / Season: ',
-            this.state.playerStats.stats[i].season
+            allSeasons[season]
           ),
           _react2.default.createElement(
             'div',

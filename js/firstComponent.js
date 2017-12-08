@@ -43,7 +43,7 @@ var PlayerStats = createReactClass({
             <div className="rowTitle" key={"datarowtitle-"+i}>
               Region: {this.state.playerStats.stats[i].region.toUpperCase()}  /
               Mode: {this.state.playerStats.stats[i].mode}  /
-              Season: {this.state.playerStats.stats[i].season}
+              Season: {allSeasons[season]}
              </div>
              <div className="rowData">
               {stats[1].label}: {stats[1].displayValue} -
