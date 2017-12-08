@@ -57,7 +57,7 @@ $_SESSION['playerStats'] = $result;
 
       </script>
         <div id="playerStatsContent"></div>
-        <div id="data"><?php displayData($result); ?></div>
+        <div id="data"><?php //displayData($result); ?></div>
       </div>
     </div>
   </div>
