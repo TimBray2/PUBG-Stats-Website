@@ -31,7 +31,7 @@ $_SESSION['playerStats'] = $result;
   crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 </head>
-<body onload="loadStats()">
+<body>
   <div id="wrapper">
     <div id="content">
       <div id="searchSection">

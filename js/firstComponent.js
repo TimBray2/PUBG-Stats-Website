@@ -18,6 +18,7 @@ function setPlayerStats(stats) {
 var allSeasons = {"2017-pre1": "Pre-Season 1", "2017-pre2": "Pre-Season 2",
 "2017-pre3": "Pre-Season 3", "2017-pre4": "Pre-Season 4",
 "2017-pre5": "Pre-Season 5", '2017-pre6': "Pre-Season 6"};
+
 //react component - get player stats
 var createReactClass = require('create-react-class');
 var PlayerStats = createReactClass({
@@ -33,6 +34,8 @@ var PlayerStats = createReactClass({
     for (var i = 0; i < this.state.playerStats.stats.length; i++) {
       var stats = this.state.playerStats.stats[i].stats
       var season = this.state.playerStats.stats[i].season;
+      var region = this.state.playerStats.stats[i].region.toUpperCase()
+      var mode = this.state.playerStats.stats[i].mode
       if (playerSeasons.indexOf(season) == -1) {
         playerSeasons.push(season);
         inputSeasons.push(<option key={'seasonOption-'+season} value={season}>{allSeasons[season]}</option>)
@@ -40,17 +43,8 @@ var PlayerStats = createReactClass({
       if (season == this.state.seasonValue) {
         dataRows.push(
           <div className="dataRow" key={"datarow-"+i}>
-            <div className="rowTitle" key={"datarowtitle-"+i}>
-              Region: {this.state.playerStats.stats[i].region.toUpperCase()}  /
-              Mode: {this.state.playerStats.stats[i].mode}  /
-              Season: {allSeasons[season]}
-             </div>
-             <div className="rowData">
-              {stats[1].label}: {stats[1].displayValue} -
-              {stats[11].label}: {stats[11].displayValue} -
-              {stats[15].label}: {stats[15].displayValue} -
-              {stats[0].label}: {stats[0].displayValue}
-             </div>
+            <StatsTitleRow id={i} season={season} region={region} mode={mode} />
+            <StatsSummaryRow stats={stats} />
           </div>
         )
       }
@@ -66,6 +60,122 @@ var PlayerStats = createReactClass({
     );
   }
 });
+/*
+function MoreStats(props) {
+  return(
+    if (props.showMore) {
+      var moreInfo = [];
+      for (i = 0; i < props.stats.length; i++) {
+        moreInfo.push(
+          <p>{props.stats[i].label}: {props.stats[i].displayValue}</p>
+        )
+      }
+      return moreInfo;
+  )
+}
+class StatsTitleRow2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleShowMore = this.handleShowMore.bind(this);
+    this.handleShowLess = this.handleShowLess.bind(this);
+    this.state = {showMore: false}
+  }
+  handleShowMore() {
+    this.setState({showMore: true})
+  }
+  handleShowLess() {
+    this.setState({showMore: false})
+  }
+
+  render() (
+    const showMore = this.state.showMore;
+    let dropDown = null;
+
+    if (showMore) {
+      dropDown = <ShowMoreStats onClick={this.handleShowMore} />;
+    } else {
+      dropDown = <ShowLessStats onClick={this.handleShowLess} />;
+    }
+    <div className="rowTitle" key={"datarowtitle-"+props.id}>
+      Region: {props.region}  /
+      Mode: {props.mode}  /
+      Season: {allSeasons[props.season]}
+    </div>
+  );
+}
+
+*/
+function StatsTitleRow(props) {
+  return (
+  <div className="rowTitle" key={"datarowtitle-"+props.id}>
+    Region: {props.region}  /
+    Mode: {props.mode}  /
+    Season: {allSeasons[props.season]}
+  </div>
+  )
+}
+
+function StatsSummaryRow2(props) {
+  return (
+   <div className="rowData">
+     {props.stats[1].label}: {props.stats[1].displayValue} -
+     {props.stats[11].label}: {props.stats[11].displayValue} -
+     {props.stats[15].label}: {props.stats[15].displayValue} -
+     {props.stats[0].label}: {props.stats[0].displayValue}
+     <div>
+     </div>
+   </div>
+  )
+}
+
+class StatsSummaryRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleShowMore = this.handleShowMore.bind(this);
+    this.handleShowLess = this.handleShowLess.bind(this);
+    this.state = {showMore: false}
+  }
+  handleShowMore() {
+    this.setState({showMore: true})
+  }
+  handleShowLess() {
+    this.setState({showMore: false})
+  }
+
+  render() {
+    const showMore = this.state.showMore;
+    let dropDown = null;
+
+    if (showMore) {
+      dropDown = <ShowMoreStats onClick={this.handleShowLess} stats={this.props.stats}/>;
+    } else {
+      dropDown = <button onClick={this.handleShowMore}>Show More</button>;
+    }
+    return (
+     <div className="rowData">
+       {this.props.stats[1].label}: {this.props.stats[1].displayValue} -
+       {this.props.stats[11].label}: {this.props.stats[11].displayValue} -
+       {this.props.stats[15].label}: {this.props.stats[15].displayValue} -
+       {this.props.stats[0].label}: {this.props.stats[0].displayValue}
+       <div className="showMore">{dropDown}</div>
+     </div>
+     )
+   }
+};
+function ShowMoreStats(props) {
+    var moreInfo = [];
+    //moreInfo.push(<div className='moreStats'>);
+    for (var i = 0; i < props.stats.length - 1; i++) {
+      //if (i % 5 == 0 && i != 0) {
+        //moreInfo.push(</div><div>);
+      //}
+      moreInfo.push(
+        <p className="extraStatsItem">{props.stats[i].label}: {props.stats[i].displayValue}</p>
+      )
+    }
+    //moreInfo.push(</div>)
+    return moreInfo;
+}
 
 ReactDOM.render(
   <PlayerStats />,

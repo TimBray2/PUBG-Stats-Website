@@ -60,11 +60,296 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _FirstComponent = __webpack_require__(1);
+
+var _FirstComponent2 = _interopRequireDefault(_FirstComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Stats;
+//Retrieve JSON info from PHP
+var oReq = new XMLHttpRequest(); //New request object
+oReq.onload = function () {
+  //The actual data is found on this.responseText
+  setPlayerStats(JSON.parse(this.responseText));
+};
+oReq.open("get", "data.php", false); //wait until the request finishes to continue
+oReq.send();
+
+//Set player stats
+function setPlayerStats(stats) {
+  Stats = stats;
+}
+var allSeasons = { "2017-pre1": "Pre-Season 1", "2017-pre2": "Pre-Season 2",
+  "2017-pre3": "Pre-Season 3", "2017-pre4": "Pre-Season 4",
+  "2017-pre5": "Pre-Season 5", '2017-pre6': "Pre-Season 6" };
+
+//react component - get player stats
+var createReactClass = __webpack_require__(28);
+var PlayerStats = createReactClass({
+  displayName: 'PlayerStats',
+
+  getInitialState: function getInitialState() {
+    return { playerStats: Stats, seasonValue: '2017-pre3' };
+  },
+  changeSeason: function changeSeason(event) {
+    this.setState({ seasonValue: event.target.value });
+  },
+  render: function render() {
+    //Set data to be displayed
+    var dataRows = [],
+        playerSeasons = [],
+        inputSeasons = [];
+    for (var i = 0; i < this.state.playerStats.stats.length; i++) {
+      var stats = this.state.playerStats.stats[i].stats;
+      var season = this.state.playerStats.stats[i].season;
+      var region = this.state.playerStats.stats[i].region.toUpperCase();
+      var mode = this.state.playerStats.stats[i].mode;
+      if (playerSeasons.indexOf(season) == -1) {
+        playerSeasons.push(season);
+        inputSeasons.push(_react2.default.createElement(
+          'option',
+          { key: 'seasonOption-' + season, value: season },
+          allSeasons[season]
+        ));
+      }
+      if (season == this.state.seasonValue) {
+        dataRows.push(_react2.default.createElement(
+          'div',
+          { className: 'dataRow', key: "datarow-" + i },
+          _react2.default.createElement(StatsTitleRow, { id: i, season: season, region: region, mode: mode }),
+          _react2.default.createElement(StatsSummaryRow, { stats: stats })
+        ));
+      }
+    }
+    return (
+      //inline css styling in JSX double brackets style={{fontSize : "1em"}}
+      _react2.default.createElement(
+        'div',
+        { className: 'playerStatsCollection' },
+        _react2.default.createElement(
+          'select',
+          { className: 'seasons', onChange: this.changeSeason, value: this.state.seasonValue },
+          inputSeasons
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          dataRows
+        )
+      )
+    );
+  }
+});
+/*
+function MoreStats(props) {
+  return(
+    if (props.showMore) {
+      var moreInfo = [];
+      for (i = 0; i < props.stats.length; i++) {
+        moreInfo.push(
+          <p>{props.stats[i].label}: {props.stats[i].displayValue}</p>
+        )
+      }
+      return moreInfo;
+  )
+}
+class StatsTitleRow2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleShowMore = this.handleShowMore.bind(this);
+    this.handleShowLess = this.handleShowLess.bind(this);
+    this.state = {showMore: false}
+  }
+  handleShowMore() {
+    this.setState({showMore: true})
+  }
+  handleShowLess() {
+    this.setState({showMore: false})
+  }
+
+  render() (
+    const showMore = this.state.showMore;
+    let dropDown = null;
+
+    if (showMore) {
+      dropDown = <ShowMoreStats onClick={this.handleShowMore} />;
+    } else {
+      dropDown = <ShowLessStats onClick={this.handleShowLess} />;
+    }
+    <div className="rowTitle" key={"datarowtitle-"+props.id}>
+      Region: {props.region}  /
+      Mode: {props.mode}  /
+      Season: {allSeasons[props.season]}
+    </div>
+  );
+}
+
+*/
+function StatsTitleRow(props) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'rowTitle', key: "datarowtitle-" + props.id },
+    'Region: ',
+    props.region,
+    '  / Mode: ',
+    props.mode,
+    '  / Season: ',
+    allSeasons[props.season]
+  );
+}
+
+function StatsSummaryRow2(props) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'rowData' },
+    props.stats[1].label,
+    ': ',
+    props.stats[1].displayValue,
+    ' -',
+    props.stats[11].label,
+    ': ',
+    props.stats[11].displayValue,
+    ' -',
+    props.stats[15].label,
+    ': ',
+    props.stats[15].displayValue,
+    ' -',
+    props.stats[0].label,
+    ': ',
+    props.stats[0].displayValue,
+    _react2.default.createElement('div', null)
+  );
+}
+
+var StatsSummaryRow = function (_React$Component) {
+  _inherits(StatsSummaryRow, _React$Component);
+
+  function StatsSummaryRow(props) {
+    _classCallCheck(this, StatsSummaryRow);
+
+    var _this = _possibleConstructorReturn(this, (StatsSummaryRow.__proto__ || Object.getPrototypeOf(StatsSummaryRow)).call(this, props));
+
+    _this.handleShowMore = _this.handleShowMore.bind(_this);
+    _this.handleShowLess = _this.handleShowLess.bind(_this);
+    _this.state = { showMore: false };
+    return _this;
+  }
+
+  _createClass(StatsSummaryRow, [{
+    key: 'handleShowMore',
+    value: function handleShowMore() {
+      this.setState({ showMore: true });
+    }
+  }, {
+    key: 'handleShowLess',
+    value: function handleShowLess() {
+      this.setState({ showMore: false });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var showMore = this.state.showMore;
+      var dropDown = null;
+
+      if (showMore) {
+        dropDown = _react2.default.createElement(ShowMoreStats, { onClick: this.handleShowLess, stats: this.props.stats });
+      } else {
+        dropDown = _react2.default.createElement(
+          'button',
+          { onClick: this.handleShowMore },
+          'Show More'
+        );
+      }
+      return _react2.default.createElement(
+        'div',
+        { className: 'rowData' },
+        this.props.stats[1].label,
+        ': ',
+        this.props.stats[1].displayValue,
+        ' -',
+        this.props.stats[11].label,
+        ': ',
+        this.props.stats[11].displayValue,
+        ' -',
+        this.props.stats[15].label,
+        ': ',
+        this.props.stats[15].displayValue,
+        ' -',
+        this.props.stats[0].label,
+        ': ',
+        this.props.stats[0].displayValue,
+        _react2.default.createElement(
+          'div',
+          { className: 'showMore' },
+          dropDown
+        )
+      );
+    }
+  }]);
+
+  return StatsSummaryRow;
+}(_react2.default.Component);
+
+;
+function ShowMoreStats(props) {
+  var moreInfo = [];
+  //moreInfo.push(<div className='moreStats'>);
+  for (var i = 0; i < props.stats.length - 1; i++) {
+    //if (i % 5 == 0 && i != 0) {
+    //moreInfo.push(</div><div>);
+    //}
+    moreInfo.push(_react2.default.createElement(
+      'p',
+      { className: 'extraStatsItem' },
+      props.stats[i].label,
+      ': ',
+      props.stats[i].displayValue
+    ));
+  }
+  //moreInfo.push(</div>)
+  return moreInfo;
+}
+
+_reactDom2.default.render(_react2.default.createElement(PlayerStats, null), document.getElementById('playerStatsContent'));
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -254,7 +539,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -296,7 +581,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -393,7 +678,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -414,10 +699,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -429,10 +714,10 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = __webpack_require__(17);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,10 +774,10 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -506,7 +791,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(3);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -558,10 +843,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -575,8 +860,8 @@ module.exports = warning;
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(5);
-  var warning = __webpack_require__(6);
+  var invariant = __webpack_require__(7);
+  var warning = __webpack_require__(8);
   var ReactPropTypesSecret = __webpack_require__(18);
   var loggedTypeFailures = {};
 }
@@ -625,10 +910,10 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -667,7 +952,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -682,7 +967,7 @@ module.exports = ExecutionEnvironment;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(3);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -745,10 +1030,10 @@ var EventListener = {
 };
 
 module.exports = EventListener;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -790,7 +1075,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -861,7 +1146,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -904,7 +1189,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -934,138 +1219,6 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _FirstComponent = __webpack_require__(15);
-
-var _FirstComponent2 = _interopRequireDefault(_FirstComponent);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(19);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Stats;
-//Retrieve JSON info from PHP
-var oReq = new XMLHttpRequest(); //New request object
-oReq.onload = function () {
-  //The actual data is found on this.responseText
-  setPlayerStats(JSON.parse(this.responseText));
-};
-oReq.open("get", "data.php", false); //wait until the request finishes to continue
-oReq.send();
-
-//Set player stats
-function setPlayerStats(stats) {
-  Stats = stats;
-}
-var allSeasons = { "2017-pre1": "Pre-Season 1", "2017-pre2": "Pre-Season 2",
-  "2017-pre3": "Pre-Season 3", "2017-pre4": "Pre-Season 4",
-  "2017-pre5": "Pre-Season 5", '2017-pre6': "Pre-Season 6" };
-//react component - get player stats
-var createReactClass = __webpack_require__(28);
-var PlayerStats = createReactClass({
-  displayName: 'PlayerStats',
-
-  getInitialState: function getInitialState() {
-    return { playerStats: Stats, seasonValue: '2017-pre3' };
-  },
-  changeSeason: function changeSeason(event) {
-    this.setState({ seasonValue: event.target.value });
-  },
-  render: function render() {
-    //Set data to be displayed
-    var dataRows = [],
-        playerSeasons = [],
-        inputSeasons = [];
-    for (var i = 0; i < this.state.playerStats.stats.length; i++) {
-      var stats = this.state.playerStats.stats[i].stats;
-      var season = this.state.playerStats.stats[i].season;
-      if (playerSeasons.indexOf(season) == -1) {
-        playerSeasons.push(season);
-        inputSeasons.push(_react2.default.createElement(
-          'option',
-          { key: 'seasonOption-' + season, value: season },
-          allSeasons[season]
-        ));
-      }
-      if (season == this.state.seasonValue) {
-        dataRows.push(_react2.default.createElement(
-          'div',
-          { className: 'dataRow', key: "datarow-" + i },
-          _react2.default.createElement(
-            'div',
-            { className: 'rowTitle', key: "datarowtitle-" + i },
-            'Region: ',
-            this.state.playerStats.stats[i].region.toUpperCase(),
-            '  / Mode: ',
-            this.state.playerStats.stats[i].mode,
-            '  / Season: ',
-            allSeasons[season]
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'rowData' },
-            stats[1].label,
-            ': ',
-            stats[1].displayValue,
-            ' -',
-            stats[11].label,
-            ': ',
-            stats[11].displayValue,
-            ' -',
-            stats[15].label,
-            ': ',
-            stats[15].displayValue,
-            ' -',
-            stats[0].label,
-            ': ',
-            stats[0].displayValue
-          )
-        ));
-      }
-    }
-    return (
-      //inline css styling in JSX double brackets style={{fontSize : "1em"}}
-      _react2.default.createElement(
-        'div',
-        { className: 'playerStatsCollection' },
-        _react2.default.createElement(
-          'select',
-          { className: 'seasons', onChange: this.changeSeason, value: this.state.seasonValue },
-          inputSeasons
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          dataRows
-        )
-      )
-    );
-  }
-});
-
-_reactDom2.default.render(_react2.default.createElement(PlayerStats, null), document.getElementById('playerStatsContent'));
-
-/***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1079,7 +1232,7 @@ _reactDom2.default.render(_react2.default.createElement(PlayerStats, null), docu
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(2),n=__webpack_require__(3),p=__webpack_require__(1),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(4),n=__webpack_require__(5),p=__webpack_require__(3),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -1115,12 +1268,12 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(2);
-var emptyObject = __webpack_require__(3);
-var invariant = __webpack_require__(5);
-var warning = __webpack_require__(6);
-var emptyFunction = __webpack_require__(1);
-var checkPropTypes = __webpack_require__(7);
+var _assign = __webpack_require__(4);
+var emptyObject = __webpack_require__(5);
+var invariant = __webpack_require__(7);
+var warning = __webpack_require__(8);
+var emptyFunction = __webpack_require__(3);
+var checkPropTypes = __webpack_require__(9);
 
 // TODO: this is special because it gets imported during build.
 
@@ -2456,7 +2609,7 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 18 */
@@ -2521,7 +2674,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = __webpack_require__(23);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 20 */
@@ -2540,7 +2693,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(4),l=__webpack_require__(8),B=__webpack_require__(2),C=__webpack_require__(1),ba=__webpack_require__(9),da=__webpack_require__(10),ea=__webpack_require__(11),fa=__webpack_require__(12),ia=__webpack_require__(13),D=__webpack_require__(3);
+var aa=__webpack_require__(6),l=__webpack_require__(10),B=__webpack_require__(4),C=__webpack_require__(3),ba=__webpack_require__(11),da=__webpack_require__(12),ea=__webpack_require__(13),fa=__webpack_require__(14),ia=__webpack_require__(15),D=__webpack_require__(5);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -2837,19 +2990,19 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var React = __webpack_require__(4);
-var invariant = __webpack_require__(5);
-var warning = __webpack_require__(6);
-var ExecutionEnvironment = __webpack_require__(8);
-var _assign = __webpack_require__(2);
-var emptyFunction = __webpack_require__(1);
-var EventListener = __webpack_require__(9);
-var getActiveElement = __webpack_require__(10);
-var shallowEqual = __webpack_require__(11);
-var containsNode = __webpack_require__(12);
-var focusNode = __webpack_require__(13);
-var emptyObject = __webpack_require__(3);
-var checkPropTypes = __webpack_require__(7);
+var React = __webpack_require__(6);
+var invariant = __webpack_require__(7);
+var warning = __webpack_require__(8);
+var ExecutionEnvironment = __webpack_require__(10);
+var _assign = __webpack_require__(4);
+var emptyFunction = __webpack_require__(3);
+var EventListener = __webpack_require__(11);
+var getActiveElement = __webpack_require__(12);
+var shallowEqual = __webpack_require__(13);
+var containsNode = __webpack_require__(14);
+var focusNode = __webpack_require__(15);
+var emptyObject = __webpack_require__(5);
+var checkPropTypes = __webpack_require__(9);
 var hyphenateStyleName = __webpack_require__(24);
 var camelizeStyleName = __webpack_require__(26);
 
@@ -18215,7 +18368,7 @@ module.exports = reactDom;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 24 */
@@ -18388,7 +18541,7 @@ module.exports = camelize;
 
 
 
-var React = __webpack_require__(4);
+var React = __webpack_require__(6);
 var factory = __webpack_require__(29);
 
 if (typeof React === 'undefined') {
@@ -18423,13 +18576,13 @@ module.exports = factory(
 
 
 
-var _assign = __webpack_require__(2);
+var _assign = __webpack_require__(4);
 
-var emptyObject = __webpack_require__(3);
-var _invariant = __webpack_require__(5);
+var emptyObject = __webpack_require__(5);
+var _invariant = __webpack_require__(7);
 
 if (process.env.NODE_ENV !== 'production') {
-  var warning = __webpack_require__(6);
+  var warning = __webpack_require__(8);
 }
 
 var MIXINS_KEY = 'mixins';
@@ -19284,7 +19437,7 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 
 module.exports = factory;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ })
 /******/ ]);
