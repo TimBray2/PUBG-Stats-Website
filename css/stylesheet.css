@@ -10,6 +10,19 @@ body{
   background-repeat: no-repeat;
 }
 
+#searchSection{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.showMoreLineDivide{
+  color: white; background-color: white;
+  border: none;
+  height: 1px;
+}
+
 .dataRow{
   margin: 2em 0 2em 0;
 }
@@ -18,7 +31,6 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 1em;
   flex-direction: column;
 }
 
@@ -45,10 +57,18 @@ body{
   padding-top: 1em;
 }
 
+.rowHeader{
+  font-size: 1em;
+}
+
 .rowTitle{
   margin-bottom: 1em;
   font-size: 1.2em;
-
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
 }
 
 .dataRow{

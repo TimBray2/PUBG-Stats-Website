@@ -50,7 +50,6 @@ var PlayerStats = createReactClass({
       }
     }
     return (
-      //inline css styling in JSX double brackets style={{fontSize : "1em"}}
       <div className="playerStatsCollection">
         <select className="seasons" onChange={this.changeSeason} value={this.state.seasonValue}>
           {inputSeasons}
@@ -60,57 +59,13 @@ var PlayerStats = createReactClass({
     );
   }
 });
-/*
-function MoreStats(props) {
-  return(
-    if (props.showMore) {
-      var moreInfo = [];
-      for (i = 0; i < props.stats.length; i++) {
-        moreInfo.push(
-          <p>{props.stats[i].label}: {props.stats[i].displayValue}</p>
-        )
-      }
-      return moreInfo;
-  )
-}
-class StatsTitleRow2 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleShowMore = this.handleShowMore.bind(this);
-    this.handleShowLess = this.handleShowLess.bind(this);
-    this.state = {showMore: false}
-  }
-  handleShowMore() {
-    this.setState({showMore: true})
-  }
-  handleShowLess() {
-    this.setState({showMore: false})
-  }
 
-  render() (
-    const showMore = this.state.showMore;
-    let dropDown = null;
-
-    if (showMore) {
-      dropDown = <ShowMoreStats onClick={this.handleShowMore} />;
-    } else {
-      dropDown = <ShowLessStats onClick={this.handleShowLess} />;
-    }
-    <div className="rowTitle" key={"datarowtitle-"+props.id}>
-      Region: {props.region}  /
-      Mode: {props.mode}  /
-      Season: {allSeasons[props.season]}
-    </div>
-  );
-}
-
-*/
 function StatsTitleRow(props) {
   return (
   <div className="rowTitle" key={"datarowtitle-"+props.id}>
-    Region: {props.region}  /
-    Mode: {props.mode}  /
-    Season: {allSeasons[props.season]}
+    <h2 className="rowHeader">Region: {props.region}</h2>
+    <h2 className="rowHeader">Mode: {props.mode}</h2>
+    <h2 className="rowHeader">Season: {allSeasons[props.season]}</h2>
   </div>
   )
 }
@@ -147,17 +102,23 @@ class StatsSummaryRow extends React.Component {
     let dropDown = null;
 
     if (showMore) {
-      dropDown = <ShowMoreStats onClick={this.handleShowLess} stats={this.props.stats}/>;
+      dropDown = <div className="showMore">
+          <ShowMoreStats onClick={this.handleShowLess} stats={this.props.stats}/>
+          <button onClick={this.handleShowLess}>Show Less</button>
+          </div>;
     } else {
-      dropDown = <button onClick={this.handleShowMore}>Show More</button>;
+      dropDown =  <div className="showMore">
+          <button onClick={this.handleShowMore}>Show More</button>
+          </div>;
     }
     return (
      <div className="rowData">
        {this.props.stats[1].label}: {this.props.stats[1].displayValue} -
-       {this.props.stats[11].label}: {this.props.stats[11].displayValue} -
+       {this.props.stats[11].label}: {this.props.stats[11].displayValue}
        {this.props.stats[15].label}: {this.props.stats[15].displayValue} -
        {this.props.stats[0].label}: {this.props.stats[0].displayValue}
-       <div className="showMore">{dropDown}</div>
+       <hr className="showMoreLineDivide"/>
+       {dropDown}
      </div>
      )
    }
