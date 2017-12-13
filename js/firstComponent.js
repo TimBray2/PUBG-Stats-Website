@@ -70,19 +70,6 @@ function StatsTitleRow(props) {
   )
 }
 
-function StatsSummaryRow2(props) {
-  return (
-   <div className="rowData">
-     {props.stats[1].label}: {props.stats[1].displayValue} -
-     {props.stats[11].label}: {props.stats[11].displayValue} -
-     {props.stats[15].label}: {props.stats[15].displayValue} -
-     {props.stats[0].label}: {props.stats[0].displayValue}
-     <div>
-     </div>
-   </div>
-  )
-}
-
 class StatsSummaryRow extends React.Component {
   constructor(props) {
     super(props);
@@ -102,40 +89,47 @@ class StatsSummaryRow extends React.Component {
     let dropDown = null;
 
     if (showMore) {
-      dropDown = <div className="showMore">
-          <ShowMoreStats onClick={this.handleShowLess} stats={this.props.stats}/>
+      dropDown = <div className="extraData">
+          <ShowMoreStats onClick={this.handleShowLess} stats={this.props.stats} />
           <button onClick={this.handleShowLess}>Show Less</button>
           </div>;
     } else {
-      dropDown =  <div className="showMore">
+      dropDown =  <div className="extraData">
           <button onClick={this.handleShowMore}>Show More</button>
           </div>;
     }
     return (
      <div className="rowData">
-       {this.props.stats[1].label}: {this.props.stats[1].displayValue} -
-       {this.props.stats[11].label}: {this.props.stats[11].displayValue}
-       {this.props.stats[15].label}: {this.props.stats[15].displayValue} -
-       {this.props.stats[0].label}: {this.props.stats[0].displayValue}
+       <div className="summaryStats">
+         <p className="summaryItem">{this.props.stats[1].label}: {this.props.stats[1].displayValue}</p>
+         <p className="summaryItem">{this.props.stats[11].label}: {this.props.stats[11].displayValue}</p>
+         <p className="summaryItem">{this.props.stats[15].label}: {this.props.stats[15].displayValue}</p>
+         <p className="summaryItem">{this.props.stats[0].label}: {this.props.stats[0].displayValue}</p>
+       </div>
        <hr className="showMoreLineDivide"/>
-       {dropDown}
+       <div className="columnsContainer">{dropDown}</div>
      </div>
      )
    }
 };
+/*
+  <div className="column">
+  <p className="extraStatsItem">{props.stats[i].label}: {props.stats[i].displayValue}</p>
+  </div>
+*/
 function ShowMoreStats(props) {
     var moreInfo = [];
-    //moreInfo.push(<div className='moreStats'>);
-    for (var i = 0; i < props.stats.length - 1; i++) {
-      //if (i % 5 == 0 && i != 0) {
-        //moreInfo.push(</div><div>);
-      //}
+    var moreInfoColumns = [];
+    for (var i = 0; i < (props.stats.length - 1); i++) {
+      if (i % 10 == 0 && i != 0 && i != 1) {
+        moreInfoColumns.push(<div className="column" key={"column"+i}>{moreInfo}</div>);
+        moreInfo = [];
+      }
       moreInfo.push(
-        <p className="extraStatsItem">{props.stats[i].label}: {props.stats[i].displayValue}</p>
+        <p className="extraStatsItem" key={"extraStatsItem"+i}>{props.stats[i].label}: {props.stats[i].displayValue}</p>
       )
     }
-    //moreInfo.push(</div>)
-    return moreInfo;
+    return <div className="showMore">{moreInfoColumns}</div>;
 }
 
 ReactDOM.render(

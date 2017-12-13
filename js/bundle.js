@@ -1069,29 +1069,6 @@ function StatsTitleRow(props) {
   );
 }
 
-function StatsSummaryRow2(props) {
-  return _react2.default.createElement(
-    'div',
-    { className: 'rowData' },
-    props.stats[1].label,
-    ': ',
-    props.stats[1].displayValue,
-    ' -',
-    props.stats[11].label,
-    ': ',
-    props.stats[11].displayValue,
-    ' -',
-    props.stats[15].label,
-    ': ',
-    props.stats[15].displayValue,
-    ' -',
-    props.stats[0].label,
-    ': ',
-    props.stats[0].displayValue,
-    _react2.default.createElement('div', null)
-  );
-}
-
 var StatsSummaryRow = function (_React$Component) {
   _inherits(StatsSummaryRow, _React$Component);
 
@@ -1125,7 +1102,7 @@ var StatsSummaryRow = function (_React$Component) {
       if (showMore) {
         dropDown = _react2.default.createElement(
           'div',
-          { className: 'showMore' },
+          { className: 'extraData' },
           _react2.default.createElement(ShowMoreStats, { onClick: this.handleShowLess, stats: this.props.stats }),
           _react2.default.createElement(
             'button',
@@ -1136,7 +1113,7 @@ var StatsSummaryRow = function (_React$Component) {
       } else {
         dropDown = _react2.default.createElement(
           'div',
-          { className: 'showMore' },
+          { className: 'extraData' },
           _react2.default.createElement(
             'button',
             { onClick: this.handleShowMore },
@@ -1147,22 +1124,44 @@ var StatsSummaryRow = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'rowData' },
-        this.props.stats[1].label,
-        ': ',
-        this.props.stats[1].displayValue,
-        ' -',
-        this.props.stats[11].label,
-        ': ',
-        this.props.stats[11].displayValue,
-        this.props.stats[15].label,
-        ': ',
-        this.props.stats[15].displayValue,
-        ' -',
-        this.props.stats[0].label,
-        ': ',
-        this.props.stats[0].displayValue,
+        _react2.default.createElement(
+          'div',
+          { className: 'summaryStats' },
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[1].label,
+            ': ',
+            this.props.stats[1].displayValue
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[11].label,
+            ': ',
+            this.props.stats[11].displayValue
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[15].label,
+            ': ',
+            this.props.stats[15].displayValue
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[0].label,
+            ': ',
+            this.props.stats[0].displayValue
+          )
+        ),
         _react2.default.createElement('hr', { className: 'showMoreLineDivide' }),
-        dropDown
+        _react2.default.createElement(
+          'div',
+          { className: 'columnsContainer' },
+          dropDown
+        )
       );
     }
   }]);
@@ -1171,23 +1170,36 @@ var StatsSummaryRow = function (_React$Component) {
 }(_react2.default.Component);
 
 ;
+/*
+  <div className="column">
+  <p className="extraStatsItem">{props.stats[i].label}: {props.stats[i].displayValue}</p>
+  </div>
+*/
 function ShowMoreStats(props) {
   var moreInfo = [];
-  //moreInfo.push(<div className='moreStats'>);
+  var moreInfoColumns = [];
   for (var i = 0; i < props.stats.length - 1; i++) {
-    //if (i % 5 == 0 && i != 0) {
-    //moreInfo.push(</div><div>);
-    //}
+    if (i % 10 == 0 && i != 0 && i != 1) {
+      moreInfoColumns.push(_react2.default.createElement(
+        'div',
+        { className: 'column', key: "column" + i },
+        moreInfo
+      ));
+      moreInfo = [];
+    }
     moreInfo.push(_react2.default.createElement(
       'p',
-      { className: 'extraStatsItem' },
+      { className: 'extraStatsItem', key: "extraStatsItem" + i },
       props.stats[i].label,
       ': ',
       props.stats[i].displayValue
     ));
   }
-  //moreInfo.push(</div>)
-  return moreInfo;
+  return _react2.default.createElement(
+    'div',
+    { className: 'showMore' },
+    moreInfoColumns
+  );
 }
 
 _reactDom2.default.render(_react2.default.createElement(PlayerStats, null), document.getElementById('playerStatsContent'));
