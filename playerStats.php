@@ -2,7 +2,15 @@
 require('functions.php');
 session_start();
 //$user = $_POST['userName'];
-$user = 'JustChillz';
+
+if( isset($_POST['userName']) ){
+    $user = $_POST['userName'];
+}
+else{
+    $user = 'JustChillz';
+}
+
+
 $_SESSION['playerStats'] = getPlayerStats();
 /*
 -type e.g. 'stats'
@@ -53,6 +61,7 @@ $_SESSION['playerStats'] = $result;
           Username: <input type="text" name="userName">
           <input type="submit">
           </form>
+          <h2>Stats For: <?php echo $user; ?></h2>
         </div>
       <div id="resultsContent">
         <div id="playerStatsContent"></div>
