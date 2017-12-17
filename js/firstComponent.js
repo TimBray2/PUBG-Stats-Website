@@ -131,8 +131,10 @@ function ShowMoreStats(props) {
     }
     return <div className="showMore">{moreInfoColumns}</div>;
 }
+//
+// ReactDOM.render(
+//   <PlayerStats />,
+//   document.getElementById('playerStatsContent')
+// );
 
-ReactDOM.render(
-  <PlayerStats />,
-  document.getElementById('playerStatsContent')
-);
+module.exports = PlayerStats;

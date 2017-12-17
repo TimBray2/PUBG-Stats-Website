@@ -946,6 +946,9 @@ var _FirstComponent2 = _interopRequireDefault(_FirstComponent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+__webpack_require__(31);
+__webpack_require__(30);
+
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1201,8 +1204,13 @@ function ShowMoreStats(props) {
     moreInfoColumns
   );
 }
+//
+// ReactDOM.render(
+//   <PlayerStats />,
+//   document.getElementById('playerStatsContent')
+// );
 
-_reactDom2.default.render(_react2.default.createElement(PlayerStats, null), document.getElementById('playerStatsContent'));
+module.exports = PlayerStats;
 
 /***/ }),
 /* 16 */
@@ -19424,6 +19432,481 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 module.exports = factory;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//import PlayerStats from './firstComponent'
+var PlayerStats = __webpack_require__(31);
+
+var Tabs = function (_React$Component) {
+    _inherits(Tabs, _React$Component);
+
+    function Tabs() {
+        _classCallCheck(this, Tabs);
+
+        var _this = _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this));
+
+        _this.state = {
+            selected: 0
+        };
+        return _this;
+    }
+
+    _createClass(Tabs, [{
+        key: 'handleClick',
+        value: function handleClick(index, event) {
+            event.preventDefault();
+            this.setState({
+                selected: index
+            });
+        }
+    }, {
+        key: '_renderTitles',
+        value: function _renderTitles() {
+            function labels(child, index) {
+                var activeClass = this.state.selected === index ? 'active' : '';
+                return _react2.default.createElement(
+                    'li',
+                    { key: index },
+                    _react2.default.createElement(
+                        'a',
+                        { href: '#',
+                            className: activeClass,
+                            onClick: this.handleClick.bind(this, index) },
+                        child.props.label
+                    )
+                );
+            }
+            return _react2.default.createElement(
+                'ul',
+                { className: 'tabs__labels' },
+                this.props.children.map(labels.bind(this))
+            );
+        }
+    }, {
+        key: '_renderContent',
+        value: function _renderContent() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'tabs__content' },
+                this.props.children[this.state.selected]
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'tabs' },
+                this._renderTitles(),
+                this._renderContent()
+            );
+        }
+    }]);
+
+    return Tabs;
+}(_react2.default.Component);
+
+var Pane = function (_React$Component2) {
+    _inherits(Pane, _React$Component2);
+
+    function Pane() {
+        _classCallCheck(this, Pane);
+
+        return _possibleConstructorReturn(this, (Pane.__proto__ || Object.getPrototypeOf(Pane)).apply(this, arguments));
+    }
+
+    _createClass(Pane, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                this.props.children
+            );
+        }
+    }]);
+
+    return Pane;
+}(_react2.default.Component);
+
+var App = function (_React$Component3) {
+    _inherits(App, _React$Component3);
+
+    function App() {
+        _classCallCheck(this, App);
+
+        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    }
+
+    _createClass(App, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    Tabs,
+                    { selected: 0 },
+                    _react2.default.createElement(
+                        Pane,
+                        { label: 'Tab 1' },
+                        _react2.default.createElement(
+                            'h1',
+                            null,
+                            'PUBG Stats.mlg'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        Pane,
+                        { label: 'Tab 2' },
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'content' },
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'searchSection' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { id: 'test-circle' })
+                                ),
+                                _react2.default.createElement(
+                                    'script',
+                                    null,
+                                    '$( document ).ready(function() ',
+                                    $("#test-circle").circliful({
+                                        animationStep: 5,
+                                        foregroundBorderWidth: 5,
+                                        backgroundBorderWidth: 15,
+                                        percent: 75
+                                    }),
+                                    ';'
+                                ),
+                                _react2.default.createElement(
+                                    'h1',
+                                    null,
+                                    'Search Users'
+                                ),
+                                _react2.default.createElement(
+                                    'form',
+                                    { method: 'post', action: 'playerStats.php' },
+                                    'Username: ',
+                                    _react2.default.createElement('input', { type: 'text', name: 'userName' }),
+                                    _react2.default.createElement('input', { type: 'submit' })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'resultsContent' },
+                                _react2.default.createElement(PlayerStats, null)
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        Pane,
+                        { label: 'Tab 3' },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'This is my tab 3 contents!'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return App;
+}(_react2.default.Component);
+
+_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('tabContent'));
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Stats;
+//Retrieve JSON info from PHP
+var oReq = new XMLHttpRequest(); //New request object
+oReq.onload = function () {
+  //The actual data is found on this.responseText
+  setPlayerStats(JSON.parse(this.responseText));
+};
+oReq.open("get", "data.php", false); //wait until the request finishes to continue
+oReq.send();
+
+//Set player stats
+function setPlayerStats(stats) {
+  Stats = stats;
+}
+var allSeasons = { "2017-pre1": "Pre-Season 1", "2017-pre2": "Pre-Season 2",
+  "2017-pre3": "Pre-Season 3", "2017-pre4": "Pre-Season 4",
+  "2017-pre5": "Pre-Season 5", '2017-pre6': "Pre-Season 6" };
+
+//react component - get player stats
+var createReactClass = __webpack_require__(28);
+var PlayerStats = createReactClass({
+  displayName: 'PlayerStats',
+
+  getInitialState: function getInitialState() {
+    return { playerStats: Stats, seasonValue: '2017-pre3' };
+  },
+  changeSeason: function changeSeason(event) {
+    this.setState({ seasonValue: event.target.value });
+  },
+  render: function render() {
+    //Set data to be displayed
+    var dataRows = [],
+        playerSeasons = [],
+        inputSeasons = [];
+    for (var i = 0; i < this.state.playerStats.stats.length; i++) {
+      var stats = this.state.playerStats.stats[i].stats;
+      var season = this.state.playerStats.stats[i].season;
+      var region = this.state.playerStats.stats[i].region.toUpperCase();
+      var mode = this.state.playerStats.stats[i].mode;
+      if (playerSeasons.indexOf(season) == -1) {
+        playerSeasons.push(season);
+        inputSeasons.push(_react2.default.createElement(
+          'option',
+          { key: 'seasonOption-' + season, value: season },
+          allSeasons[season]
+        ));
+      }
+      if (season == this.state.seasonValue) {
+        dataRows.push(_react2.default.createElement(
+          'div',
+          { className: 'dataRow', key: "datarow-" + i },
+          _react2.default.createElement(StatsTitleRow, { id: i, season: season, region: region, mode: mode }),
+          _react2.default.createElement(StatsSummaryRow, { stats: stats })
+        ));
+      }
+    }
+    return _react2.default.createElement(
+      'div',
+      { className: 'playerStatsCollection' },
+      _react2.default.createElement(
+        'select',
+        { className: 'seasons', onChange: this.changeSeason, value: this.state.seasonValue },
+        inputSeasons
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        dataRows
+      )
+    );
+  }
+});
+
+function StatsTitleRow(props) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'rowTitle', key: "datarowtitle-" + props.id },
+    _react2.default.createElement(
+      'h2',
+      { className: 'rowHeader' },
+      'Region: ',
+      props.region
+    ),
+    _react2.default.createElement(
+      'h2',
+      { className: 'rowHeader' },
+      'Mode: ',
+      props.mode
+    ),
+    _react2.default.createElement(
+      'h2',
+      { className: 'rowHeader' },
+      'Season: ',
+      allSeasons[props.season]
+    )
+  );
+}
+
+var StatsSummaryRow = function (_React$Component) {
+  _inherits(StatsSummaryRow, _React$Component);
+
+  function StatsSummaryRow(props) {
+    _classCallCheck(this, StatsSummaryRow);
+
+    var _this = _possibleConstructorReturn(this, (StatsSummaryRow.__proto__ || Object.getPrototypeOf(StatsSummaryRow)).call(this, props));
+
+    _this.handleShowMore = _this.handleShowMore.bind(_this);
+    _this.handleShowLess = _this.handleShowLess.bind(_this);
+    _this.state = { showMore: false };
+    return _this;
+  }
+
+  _createClass(StatsSummaryRow, [{
+    key: 'handleShowMore',
+    value: function handleShowMore() {
+      this.setState({ showMore: true });
+    }
+  }, {
+    key: 'handleShowLess',
+    value: function handleShowLess() {
+      this.setState({ showMore: false });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var showMore = this.state.showMore;
+      var dropDown = null;
+
+      if (showMore) {
+        dropDown = _react2.default.createElement(
+          'div',
+          { className: 'extraData' },
+          _react2.default.createElement(ShowMoreStats, { onClick: this.handleShowLess, stats: this.props.stats }),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleShowLess },
+            'Show Less'
+          )
+        );
+      } else {
+        dropDown = _react2.default.createElement(
+          'div',
+          { className: 'extraData' },
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleShowMore },
+            'Show More'
+          )
+        );
+      }
+      return _react2.default.createElement(
+        'div',
+        { className: 'rowData' },
+        _react2.default.createElement(
+          'div',
+          { className: 'summaryStats' },
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[1].label,
+            ': ',
+            this.props.stats[1].displayValue
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[11].label,
+            ': ',
+            this.props.stats[11].displayValue
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[15].label,
+            ': ',
+            this.props.stats[15].displayValue
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'summaryItem' },
+            this.props.stats[0].label,
+            ': ',
+            this.props.stats[0].displayValue
+          )
+        ),
+        _react2.default.createElement('hr', { className: 'showMoreLineDivide' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'columnsContainer' },
+          dropDown
+        )
+      );
+    }
+  }]);
+
+  return StatsSummaryRow;
+}(_react2.default.Component);
+
+;
+/*
+  <div className="column">
+  <p className="extraStatsItem">{props.stats[i].label}: {props.stats[i].displayValue}</p>
+  </div>
+*/
+function ShowMoreStats(props) {
+  var moreInfo = [];
+  var moreInfoColumns = [];
+  for (var i = 0; i < props.stats.length - 1; i++) {
+    if (i % 10 == 0 && i != 0 && i != 1) {
+      moreInfoColumns.push(_react2.default.createElement(
+        'div',
+        { className: 'column', key: "column" + i },
+        moreInfo
+      ));
+      moreInfo = [];
+    }
+    moreInfo.push(_react2.default.createElement(
+      'p',
+      { className: 'extraStatsItem', key: "extraStatsItem" + i },
+      props.stats[i].label,
+      ': ',
+      props.stats[i].displayValue
+    ));
+  }
+  return _react2.default.createElement(
+    'div',
+    { className: 'showMore' },
+    moreInfoColumns
+  );
+}
+//
+// ReactDOM.render(
+//   <PlayerStats />,
+//   document.getElementById('playerStatsContent')
+// );
+
+module.exports = PlayerStats;
 
 /***/ })
 /******/ ]);
